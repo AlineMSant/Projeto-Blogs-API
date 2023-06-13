@@ -1,4 +1,4 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, User } = require('../models');
 
 const create = async (title, content, userId, categoryIds) => {
   const categories = categoryIds.map((id) => Category.findOne({ where: { id } }));
@@ -14,6 +14,12 @@ const create = async (title, content, userId, categoryIds) => {
   return newPost;
 };
 
+const getAll = async () => BlogPost.findAll({
+  include: [{ model: User, as: 'users', attributes: { exclude: 'password' } },
+  { model: Category, as: 'categories', through: { attributes: [] } }],
+});
+
 module.exports = {
   create,
+  getAll,
 };
