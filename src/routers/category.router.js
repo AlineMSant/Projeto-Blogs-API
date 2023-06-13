@@ -7,4 +7,6 @@ const router = Router();
 
 router.post('/', validateJWT, validateName, categoryController.create);
 
+router.get('/', validateJWT, categoryController.getAll);
+
 module.exports = router;
