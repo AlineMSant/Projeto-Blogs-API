@@ -8,7 +8,7 @@ const create = async (displayName, email, password, image) => {
   return newUser;
 };
 
-const getById = (id) => User.findOne({ where: { id } });
+const getById = (id) => User.findOne({ where: { id }, attributes: { exclude: 'password' } });
 
 const getAll = async () => User.findAll({ attributes: { exclude: 'password' } });
 
