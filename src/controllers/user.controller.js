@@ -7,7 +7,6 @@ const create = async (req, res) => {
   const { displayName, email, password, image } = req.body;
 
   const userRegistered = await userService.getByEmail(email);
-  console.log(userRegistered);
 
   if (userRegistered) {
     return res.status(409).json({ message: 'User already registered' });
