@@ -15,7 +15,7 @@ const create = async (title, content, userId, categoryIds) => {
 };
 
 const getAll = async () => BlogPost.findAll({
-  include: [{ model: User, as: 'users', attributes: { exclude: 'password' } },
+  include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
   { model: Category, as: 'categories', through: { attributes: [] } }],
 });
 
