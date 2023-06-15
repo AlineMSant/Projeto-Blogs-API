@@ -22,4 +22,6 @@ router.get('/:id', validateJWT, postController.getById);
 
 router.put('/:id', validateTitle, validateContent, validateJWT, postController.update);
 
+router.delete('/:id', validateJWT, postController.deleteById);
+
 module.exports = router;

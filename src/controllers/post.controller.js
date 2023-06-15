@@ -40,9 +40,20 @@ const update = async (req, res) => {
   return res.status(200).json(updated);
 };
 
+const deleteById = async (req, res) => {
+  const { id } = req.params;
+
+  const deleted = await postService.deleteById(id, req.user.id);
+
+  if (deleted.type) return res.status(deleted.type).json({ message: deleted.message });
+
+  return res.status(204).json();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deleteById,
 };
