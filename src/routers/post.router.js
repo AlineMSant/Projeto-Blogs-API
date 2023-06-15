@@ -20,4 +20,6 @@ router.get('/', validateJWT, postController.getAll);
 
 router.get('/:id', validateJWT, postController.getById);
 
+router.put('/:id', validateTitle, validateContent, validateJWT, postController.update);
+
 module.exports = router;

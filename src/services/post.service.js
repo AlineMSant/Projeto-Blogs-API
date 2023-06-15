@@ -30,8 +30,21 @@ if (!blogById) return { message: 'Post does not exist' };
 return blogById;
 };
 
+const update = async (id, title, content, userId) => {
+  const post = await getById(id);
+  if (post.user.id !== userId) return { message: 'Unauthorized user' };
+
+  const updated = await post.update({
+    title,
+    content,
+  });
+
+  return updated;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
