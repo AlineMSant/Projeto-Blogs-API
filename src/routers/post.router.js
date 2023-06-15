@@ -18,6 +18,8 @@ postController.create,
 
 router.get('/', validateJWT, postController.getAll);
 
+router.get('/search', validateJWT, postController.search);
+
 router.get('/:id', validateJWT, postController.getById);
 
 router.put('/:id', validateTitle, validateContent, validateJWT, postController.update);

@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, Category, User } = require('../models');
 
 const create = async (title, content, userId, categoryIds) => {
@@ -58,10 +59,31 @@ const deleteById = async (id, userId) => {
   return { type: null };
 };
 
+// https://stackoverflow.com/questions/20695062/sequelize-or-condition-object
+// https://pt.stackoverflow.com/questions/355872/como-utilizar-o-like-do-sql-no-sequelize
+const search = async (q) => {
+  if (!q) {
+    const allPosts = await getAll();
+    return { type: 200, message: allPosts };
+  }
+
+  const query = `%${q}%`;
+
+  const postByContent = await BlogPost.findAll({
+    include: [{ model: User, as: 'user', attributes: { exclude: 'password' } },
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+    where: { [Op.or]: [{ content: { [Op.like]: query } }, { title: { [Op.like]: query } }] } });
+
+  if (!postByContent) return { type: 200, message: [] };
+
+  return postByContent;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteById,
+  search,
 };
